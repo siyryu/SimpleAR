@@ -12,7 +12,7 @@ from typing import Dict
 import torch
 from torch.utils.data import Dataset
 import transformers
-from simpar.train.preprocess import preprocess_multimodal, preprocess_t2i, preprocess_t2v
+from simpar.train.preprocess import preprocess_multimodal, preprocess_t2i
 from simpar.utils import rank0_print
 
 class T2TokenDataset(Dataset):

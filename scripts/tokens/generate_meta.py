@@ -4,9 +4,9 @@ from tqdm import tqdm
 from multiprocessing import Pool, cpu_count
 
 datasets = ["dataset_names"]
-resolution = 1024
-root = "/path_to_dir/cosmos_tokens"
-total = 120000
+resolution = 512
+root = "/home/siyuanyu/data/mnist_for_simplear/extracted_tokens"
+total = 100
 
 def check_file(i, code_dir, label_dir):
     code_path = os.path.join(code_dir, f"{i}.npy")

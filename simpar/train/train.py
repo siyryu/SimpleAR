@@ -136,6 +136,7 @@ class DataArguments:
     image_grid_pinpoints: Optional[str] = field(default=None)
     image_crop_resolution: Optional[int] = field(default=None)
     image_split_resolution: Optional[int] = field(default=None)
+    sequence_length: Optional[int] = field(default=1536) # 这个地方好像是原脚本的问题
 
     video_folder: Optional[str] = field(default=None)
     video_fps: Optional[int] = field(default=1)
