@@ -146,14 +146,6 @@ def main(data_args):
     dist.destroy_process_group()
 
 if __name__ == "__main__":
-    # import sys
-    # for arg in sys.argv:
-    #     if arg.startswith("--local-rank="):
-    #         rank = arg.split("=")[1]
-    #         sys.argv.remove(arg)
-    #         sys.argv.append('--local_rank')
-    #         sys.argv.append(rank)
-
     parser = transformers.HfArgumentParser([DataArguments])
     data_args = parser.parse_args_into_dataclasses()[0]
     # data_args.gen_image_folder = ""
