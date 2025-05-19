@@ -64,6 +64,7 @@ train = [
     "ijson",
     "transformers@git+https://github.com/huggingface/transformers.git@7bbc62474391aff64f63fcc064c975752d1fa4de",
     "trl==0.15.2",
+    "mamba-ssm[causal-conv1d]"
 ]
 
 [tool.setuptools.packages.find]
