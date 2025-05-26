@@ -1,6 +1,7 @@
 AVAILABLE_MODELS = {
     "modeling_qwen2": "Qwen2ForCausalLM",
     "simpar_qwen2": "SimpARForCausalLM",
+    "simpar_mamba2": "SimpARMambaForCausalLM"
 }
 
 for model_name, model_classes in AVAILABLE_MODELS.items():

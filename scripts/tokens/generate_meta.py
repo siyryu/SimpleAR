@@ -3,9 +3,9 @@ import json
 from tqdm import tqdm
 from multiprocessing import Pool, cpu_count
 
-datasets = ["dataset_names"]
+datasets = ["mnist"]
 resolution = 512
-root = "/home/siyuanyu/data/mnist_for_simplear/extracted_tokens"
+root = "/home/yusiyuan1/data/mnist/extracted_tokens"
 total = 100
 
 def check_file(i, code_dir, label_dir):

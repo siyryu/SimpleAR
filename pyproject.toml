@@ -10,7 +10,7 @@ name = "simpar"
 version = "1.7.0.dev0"
 description = "SimpAR: Pushing the Frontier of Autoregressive Visual Generation through Pretraining, SFT, and RL"
 readme = "README.md"
-requires-python = ">=3.8"
+requires-python = ">=3.9"
 classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: Apache Software License",
@@ -64,7 +64,7 @@ train = [
     "ijson",
     "transformers@git+https://github.com/huggingface/transformers.git@7bbc62474391aff64f63fcc064c975752d1fa4de",
     "trl==0.15.2",
-    "mamba-ssm[causal-conv1d]"
+#    "mamba-ssm[causal-conv1d]"
 ]
 
 [tool.setuptools.packages.find]

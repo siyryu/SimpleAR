@@ -51,6 +51,10 @@ from simpar.train.t2token_data import T2TokenDataset
 from simpar.train.preprocess import preprocess, preprocess_multimodal
 
 from simpar.model.language_model.modeling_qwen2 import Qwen2ForCausalLM, Qwen2Config
+from simpar.model.language_model.simpar_mamba2 import Mamba2ForCausalLM
+
+from transformers import MambaForCausalLM
+
 torch.multiprocessing.set_sharing_strategy("file_system")
 
 ImageFile.LOAD_TRUNCATED_IMAGES = True
@@ -721,7 +725,19 @@ def get_model(model_args, training_args, bnb_model_from_pretrained_args):
 
         customized_kwargs["config"] = cfg_pretrained
 
-    if model_args.model_class_name is not None:
+    if "mamba2" in model_args.model_name_or_path.lower():
+        model = Mamba2ForCausalLM.from_pretrained(
+            model_args.model_name_or_path,
+            torch_dtype=torch.bfloat16,
+            **customized_kwargs,
+        )
+    elif "mamba" in model_args.model_name_or_path.lower():
+        model = MambaForCausalLM.from_pretrained(
+            model_args.model_name_or_path,
+            torch_dtype=torch.bfloat16,
+            **customized_kwargs,
+        )
+    elif model_args.model_class_name is not None:
         actual_model_class_name = f"{model_args.model_class_name}ForCausalLM"
         model_class = getattr(transformers, actual_model_class_name)
         rank0_print(f"Using model class {model_class} from {model_args.model_class_name}")
@@ -919,6 +935,8 @@ def train(attn_implementation=None):
         tokenizer = transformers.AutoTokenizer.from_pretrained(model_args.model_name_or_path, cache_dir=training_args.cache_dir, model_max_length=training_args.model_max_length, padding_side="left")
     elif "qwen" in model_args.model_name_or_path.lower():
         tokenizer = transformers.AutoTokenizer.from_pretrained(model_args.model_name_or_path, cache_dir=training_args.cache_dir, model_max_length=training_args.model_max_length, padding_side="right")
+    elif "mamba" in model_args.model_name_or_path.lower():
+        tokenizer = transformers.AutoTokenizer.from_pretrained(model_args.model_name_or_path, cache_dir=training_args.cache_dir, model_max_length=training_args.model_max_length)
     else:
         tokenizer = transformers.AutoTokenizer.from_pretrained(
             model_args.model_name_or_path,

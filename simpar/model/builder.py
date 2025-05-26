@@ -18,6 +18,9 @@ from transformers import AutoTokenizer, BitsAndBytesConfig
 from simpar.model import *
 from simpar.utils import rank0_print
 from simpar.model.language_model.simpar_qwen2 import SimpARForCausalLM
+from simpar.model.language_model.simpar_mamba2 import SimpARMambaForCausalLM as SimpARForCausalLM_MAMBA2
+
+from transformers import MambaForCausalLM
 
 try:
     from vllm import LLM
@@ -31,8 +34,15 @@ def load_pretrained_model(model_path, device_map="auto", attn_implementation="fl
     kwargs["device_map"] = device_map
     kwargs["torch_dtype"] = torch.bfloat16
 
-    tokenizer = AutoTokenizer.from_pretrained(model_path, use_fast=False)
-    model = SimpARForCausalLM.from_pretrained(model_path, low_cpu_mem_usage=True, attn_implementation=attn_implementation, **kwargs)
+    if "mamba2" in model_path:
+        tokenizer = AutoTokenizer.from_pretrained(model_path)
+        model = SimpARForCausalLM_MAMBA2.from_pretrained(model_path, low_cpu_mem_usage=True, **kwargs)
+    elif "mamba" in model_path:
+        tokenizer = AutoTokenizer.from_pretrained(model_path)
+        model = MambaForCausalLM.from_pretrained(model_path, low_cpu_mem_usage=True, **kwargs)
+    else:
+        tokenizer = AutoTokenizer.from_pretrained(model_path, use_fast=False)
+        model = SimpARForCausalLM.from_pretrained(model_path, low_cpu_mem_usage=True, attn_implementation=attn_implementation, **kwargs)
 
     rank0_print(f"Model Class: {model.__class__.__name__}")
     image_processor = None
