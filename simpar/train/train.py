@@ -725,19 +725,19 @@ def get_model(model_args, training_args, bnb_model_from_pretrained_args):
 
         customized_kwargs["config"] = cfg_pretrained
 
-    if "mamba2" in model_args.model_name_or_path.lower():
-        model = Mamba2ForCausalLM.from_pretrained(
-            model_args.model_name_or_path,
-            torch_dtype=torch.bfloat16,
-            **customized_kwargs,
-        )
-    elif "mamba" in model_args.model_name_or_path.lower():
-        model = MambaForCausalLM.from_pretrained(
-            model_args.model_name_or_path,
-            torch_dtype=torch.bfloat16,
-            **customized_kwargs,
-        )
-    elif model_args.model_class_name is not None:
+    # if "mamba2" in model_args.model_name_or_path.lower():
+    #     model = Mamba2ForCausalLM.from_pretrained(
+    #         model_args.model_name_or_path,
+    #         torch_dtype=torch.bfloat16,
+    #         **customized_kwargs,
+    #     )
+    # elif "mamba" in model_args.model_name_or_path.lower():
+    #     model = MambaForCausalLM.from_pretrained(
+    #         model_args.model_name_or_path,
+    #         torch_dtype=torch.bfloat16,
+    #         **customized_kwargs,
+    #     )
+    if model_args.model_class_name is not None:
         actual_model_class_name = f"{model_args.model_class_name}ForCausalLM"
         model_class = getattr(transformers, actual_model_class_name)
         rank0_print(f"Using model class {model_class} from {model_args.model_class_name}")
